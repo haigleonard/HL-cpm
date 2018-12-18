@@ -4,8 +4,8 @@
 class Space
 {
 private:
-	std::string noPlate;
-	int ticketNumber;
+	std::string noplate;
+	int ticketnumber;
 	bool empty;
 public:
 	Space();
