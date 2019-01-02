@@ -16,4 +16,5 @@ int main()
 	manage->processTicket();
 	//prints state of car park
 	manage->printCarPark();
+
 }
