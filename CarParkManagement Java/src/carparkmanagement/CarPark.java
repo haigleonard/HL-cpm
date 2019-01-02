@@ -32,7 +32,7 @@ public class CarPark {
                 
 	for(int i = 0 ; i < data.length; i ++) 
 		if (data[i].charAt(0) == 'p')
-                    addSpace(data[i].replaceAll("(?:\\b)[a-z]*(?:\\b)", "").replace("  ", " "));
+                    addSpace(data[i].replaceAll("p", ""));
 		else if (data[i].charAt(0) == 'u')
                     removeSpace(Integer.parseInt(data[i].replaceAll("\\D+","")));
 		else if (data[i].charAt(0) == 'c') 
@@ -41,6 +41,7 @@ public class CarPark {
     }
 
     public boolean addSpace(String s) {
+        
 	//if there are no spaces, break
 	if (freeSpaces == 0)  return false;
 	//cycle through the ten spaces, if empty add current ticketID count and reg no. ticket ++, return true to end for loop;
@@ -61,7 +62,7 @@ public class CarPark {
 	for (int i = 0; i < 10; i++) 
 		if (spaces[i].getticketNumber() == tID)
 		{
-			spaces[i].clear();
+			spaces[i] = new Space();
 			freeSpaces++;
 			return true;
 		}
@@ -77,7 +78,7 @@ public class CarPark {
 				if (!spaces[e].getEmpty())
 				{
 					spaces[i] = new Space(spaces[e]);
-					spaces[e].clear();
+					spaces[e] = new Space();
 					e = 9;
 				}
     }
@@ -120,24 +121,11 @@ public class CarPark {
         public String toString() {
             return noplate + ",";
         }
-        
-        public String getnoPlate() { 
-            if (!empty) return noplate;
-            else return ""; 
-        }
-        
         //returns ticket number if empty is not true/filled
         public int getticketNumber() {
             if (!empty) return ticketnumber;
             else return 0;
         }
-
-        //sets space to empty (number plate to clear (""), tickernumber equalling 0 and empty to true)
-        public void clear() { 
-                noplate = ""; 
-                ticketnumber = 0; 
-                empty = true; 
-        }     
     }
 }
 
