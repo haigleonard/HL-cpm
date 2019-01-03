@@ -26,7 +26,8 @@ public class CarPark {
         if (ticket.isEmpty()) return false;
         //splits string using ', ' delimiter  
         String[] data = ticket.split(", ");
-        //cycle through string array of each isntruction, processing instruction depending on first character        
+        //cycle through string array of each isntruction, processing instruction depending on first character       
+        //could use regular expression, but for more concise code and for the problem requirement the following method is best
 	for(int i = 0 ; i < data.length; i ++) 
 		if (data[i].charAt(0) == 'p')
                     addSpace(data[i].replaceAll("p", ""));
