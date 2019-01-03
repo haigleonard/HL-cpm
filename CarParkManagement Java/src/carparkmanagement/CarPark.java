@@ -25,15 +25,15 @@ public class CarPark {
         //returns false due to string being empty therefore processing not possible
         if (ticket.isEmpty()) return false;
         //splits string using ', ' delimiter  
-        String[] data = ticket.split(", ");
+        String[] instructions = ticket.split(", ");
         //cycle through string array of each isntruction, processing instruction depending on first character       
         //could use regular expression, but for more concise code and for the problem requirement the following method is best
-	for(int i = 0 ; i < data.length; i ++) 
-		if (data[i].charAt(0) == 'p')
-                    addSpace(data[i].replaceAll("p", ""));
-		else if (data[i].charAt(0) == 'u')
-                    removeSpace(Integer.parseInt(data[i].replaceAll("\\D+","")));
-		else if (data[i].charAt(0) == 'c') 
+	for(int i = 0 ; i < instructions.length; i ++) 
+		if (instructions[i].charAt(0) == 'p')
+                    addSpace(instructions[i].replaceAll("p", ""));
+		else if (instructions[i].charAt(0) == 'u')
+                    removeSpace(Integer.parseInt(instructions[i].replaceAll("\\D+","")));
+		else if (instructions[i].charAt(0) == 'c') 
                     shuffleSpaces();
         return true;
     }
