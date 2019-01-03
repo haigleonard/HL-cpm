@@ -5,47 +5,44 @@
  */
 package carparkmanagement;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  *
  * @author Haig
  */
 public class CarPark {
-    String ticket;
-    Space[] spaces = new Space[10];
-    int freeSpaces = 10;
-    int ticketstart = 5000;
+    private String ticket;
+    private Space[] spaces = new Space[10];
+    private int freeSpaces = 10;
+    private int ticketstart = 5000;
     
     CarPark(String input) {
         ticket = input;
-        for (int i = 0; i < 10; i++) 
+        for (int i = 0; i < spaces.length; i++) 
 		spaces[i] = new Space(); 
     }
     
-    public boolean ProcessTicket() {
-        
+    public boolean processTicket() {
+        //returns false due to string being empty therefore processing not possible
         if (ticket.isEmpty()) return false;
-        
+        //splits string using ', ' delimiter  
         String[] data = ticket.split(", ");
-                
+        //cycle through string array of each isntruction, processing instruction depending on first character        
 	for(int i = 0 ; i < data.length; i ++) 
 		if (data[i].charAt(0) == 'p')
                     addSpace(data[i].replaceAll("p", ""));
 		else if (data[i].charAt(0) == 'u')
                     removeSpace(Integer.parseInt(data[i].replaceAll("\\D+","")));
 		else if (data[i].charAt(0) == 'c') 
-                    shuffle();
+                    shuffleSpaces();
         return true;
     }
 
-    public boolean addSpace(String s) {
+    private boolean addSpace(String s) {
         
 	//if there are no spaces, break
 	if (freeSpaces == 0)  return false;
 	//cycle through the ten spaces, if empty add current ticketID count and reg no. ticket ++, return true to end for loop;
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < spaces.length; i++)
 		if (spaces[i].getEmpty()) {
 			spaces[i] = new Space(s, ticketstart); 
                         freeSpaces--;
@@ -55,11 +52,11 @@ public class CarPark {
 	return false;
     }
     
-    boolean removeSpace(int tID) {
+    private boolean removeSpace(int tID) {
 	//if there are no cars/10 free spaces return
-	if (freeSpaces == 10) return false;
+	if (freeSpaces == spaces.length) return false;
 	//cycloe through 10 spaces, if ticketID referenced is equal to space[i], clear and add to freespaces
-	for (int i = 0; i < 10; i++) 
+	for (int i = 0; i < spaces.length; i++) 
 		if (spaces[i].getticketNumber() == tID)
 		{
 			spaces[i] = new Space();
@@ -69,7 +66,7 @@ public class CarPark {
 	return false;
     }
     
-    void shuffle() {
+    private void shuffleSpaces() {
 	// cycle from first to second from last and check is space is empty
 	for (int i = 0; i < 9; i++) 
 		if (spaces[i].getEmpty())
@@ -77,54 +74,62 @@ public class CarPark {
 			for (int e = i + 1; e < 9 - i; e++) 
 				if (!spaces[e].getEmpty())
 				{
+                                    //copy constructor moving taken sapce to space to left
 					spaces[i] = new Space(spaces[e]);
+                                        //reinitialising space
 					spaces[e] = new Space();
+                                        //sets e to 9 to exit inner forloop and move to next space
 					e = 9;
 				}
     }
     
     public void print() { 
 	//print each space number plate
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < spaces.length; i++)
             System.out.print(spaces[i]);
     }
     
-    public class Space
+    private class Space
     {
-        String noplate;
-        int ticketnumber;
-        boolean empty = false;
+        private String noplate;
+        private int ticketnumber;
+        private boolean empty = false;
         
+        //default constructor for initialising space
         Space() { 
             noplate = ""; 
             ticketnumber = 0; 
             empty = true; 
         }
         
+        //assigning car to space with reg, ticketnumber and assigning it is not empty
         Space(String noplat, int ticketnum) { 
 	noplate = noplat;
 	ticketnumber = ticketnum;
 	empty = false; 
         }
         
+        //copy constructor for shuffle
         Space(Space s) {
             noplate = s.noplate;
             ticketnumber = s.ticketnumber;
             empty = s.empty;
         }
         
+        //returns state of space
         public boolean getEmpty() {
             return empty;
         }
         
+        //returns format of toString
         @Override
         public String toString() {
             return noplate + ",";
         }
-        //returns ticket number if empty is not true/filled
+        
+        //returns ticket number
         public int getticketNumber() {
-            if (!empty) return ticketnumber;
-            else return 0;
+            return ticketnumber;
         }
     }
 }

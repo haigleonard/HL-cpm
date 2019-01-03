@@ -24,7 +24,7 @@ public class CarParkManagement {
 	//set ticket
 	CarPark carpark = new CarPark(input);
 	//processes string
-	carpark.ProcessTicket();
+	carpark.processTicket();
 	//prints state of car park
         carpark.print();
     }
