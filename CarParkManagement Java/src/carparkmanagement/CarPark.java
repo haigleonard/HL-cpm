@@ -75,7 +75,7 @@ public class CarPark {
 			for (int e = i + 1; e < 9 - i; e++) 
 				if (!spaces[e].getEmpty())
 				{
-                                    //copy constructor moving taken sapce to space to left
+                                    //copy constructor moving taken space to space to left
 					spaces[i] = new Space(spaces[e]);
                                         //reinitialising space
 					spaces[e] = new Space();
